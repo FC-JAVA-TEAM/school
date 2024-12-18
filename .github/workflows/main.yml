@@ -36,6 +36,14 @@ jobs:
         with:
           credentials_json: ${{ secrets.SPRINGBOOT }}
 
+      # Debug: Output the Project ID
+      - name: Debug Project ID
+        run: echo "Using Google Cloud Project ID:${{ secrets.PROJECT_ID }}"
+
+      # Debug: Display Docker build tag
+      - name: Debug Docker Build Tag
+        run: echo "Docker build command:docker build -t gcr.io/${{ secrets.PROJECT_ID }}/myapp . --no-cache"
+
       # Build Docker Image
       - name: Build Docker Image
         run: |
