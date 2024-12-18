@@ -37,6 +37,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.SPRINGBOOT }}
 
+      # Configure Docker to authenticate with Google Cloud Artifact Registry
+      - name: Configure Docker to use gcloud credentials
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+
       # Build Docker Image
       - name: Build Docker Image
         run: |
