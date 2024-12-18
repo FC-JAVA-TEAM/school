@@ -1,54 +1,48 @@
 package com.school.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
 /**
  * 
  */
-@Entity
-@Table(name = "School_Table")
+//@Entity
+//@Table(name = "School_Table")
 public class School {
 	
 	
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
-	private String schoolName;
-	private String email;
-
-	public Long getId() {
-		return Id;
-	}
-
-	public School() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public void setId(Long id) {
-		Id = id;
-	}
-
-	public String getSchoolName() {
-		return schoolName;
-	}
-
-	public void setSchoolName(String schoolName) {
-		this.schoolName = schoolName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+//   @Id
+//   @GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Long Id;
+//	private String schoolName;
+//	private String email;
+//
+//	public Long getId() {
+//		return Id;
+//	}
+//
+//	public School() {
+//		super();
+//		// TODO Auto-generated constructor stub
+//	}
+//
+//	public void setId(Long id) {
+//		Id = id;
+//	}
+//
+//	public String getSchoolName() {
+//		return schoolName;
+//	}
+//
+//	public void setSchoolName(String schoolName) {
+//		this.schoolName = schoolName;
+//	}
+//
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
 
 	
 
