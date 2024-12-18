@@ -28,18 +28,13 @@ jobs:
       - name: Set up Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: ${{ secrets.PROJECT_ID }}
 
       # Authenticate to Google Cloud
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.SPRINGBOOT }}
-
-      # Debug GCP Project ID to ensure it's set correctly
-      - name: Debug GCP Project ID
-        run: |
-          echo "GCP Project ID: ${PROJECT_ID:-'Default_GCP_Project_ID'}"
 
       # Build Docker Image
       - name: Build Docker Image
@@ -49,13 +44,13 @@ jobs:
       # Push Docker Image to GCR
       - name: Push Docker Image to GCR
         run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp
+          docker push gcr.io/${{ secrets.PROJECT_ID }}/myapp
 
       # Deploy to Google Cloud Run
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy demo-service \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp \
+            --image gcr.io/${{ secrets.PROJECT_ID }}/myapp \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
