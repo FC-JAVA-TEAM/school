@@ -40,18 +40,18 @@ jobs:
       # Build Docker Image
       - name: Build Docker Image
         run: |
-          docker build -t us-central1-docker.pkg.dev/gcp-peoject-1/vaddin-demo/myapp .
+          docker build -t us-central1-docker.pkg.dev/gcp-peoject-1/vadin-demo/myapp .
 
       # Push Docker Image to Artifact Registry
       - name: Push Docker Image to Artifact Registry
         run: |
-          docker push us-central1-docker.pkg.dev/gcp-peoject-1/vaddin-demo/myapp
+          docker push us-central1-docker.pkg.dev/gcp-peoject-1/vadin-demo/myapp
 
       # Deploy to Google Cloud Run
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy demo-service \
-            --image us-central1-docker.pkg.dev/gcp-peoject-1/vaddin-demo/myapp \
+            --image us-central1-docker.pkg.dev/gcp-peoject-1/vadin-demo/myapp \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
