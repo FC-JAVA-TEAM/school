@@ -36,6 +36,10 @@ jobs:
         with:
           credentials_json: ${{ secrets.SPRINGBOOT }}
 
+      # Debug GCP_PROJECT_ID secret
+      - name: Debug GCP_PROJECT_ID
+        run: echo "GCP Project ID: ${{ secrets.GCP_PROJECT_ID }}"
+
       # Build Docker Image
       - name: Build Docker Image
         run: |
