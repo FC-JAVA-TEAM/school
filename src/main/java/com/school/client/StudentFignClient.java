@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.school.dto.Student;
 
 
-@FeignClient(name ="student-service", url ="${application.config.students-url}")
+//@FeignClient(name ="student-service", url ="${application.config.students-url}")
 public interface StudentFignClient {
 
 	
