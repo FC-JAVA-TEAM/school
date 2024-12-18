@@ -3,13 +3,14 @@ name: Build and Deploy to GCP
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to main branch
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      # Checkout code
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -20,45 +21,42 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Build with Maven
+      # Build the project with Maven
       - name: Build with Maven
         run: mvn clean install
 
       # Set up Google Cloud SDK
-      - name: Set up Google Cloud CLI
+      - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: ${{ secrets.PROJECT_ID }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      # Authenticate to Google Cloud
+      # Authenticate to Google Cloud using service account
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.SPRINGBOOT }}
 
-      # Debug: Output the Project ID
-      - name: Debug Project ID
-        run: echo "Using Google Cloud Project ID:${{ secrets.PROJECT_ID }}"
-
-      # Debug: Display Docker build tag
-      - name: Debug Docker Build Tag
-        run: echo "Docker build command:docker build -t gcr.io/${{ secrets.PROJECT_ID }}/myapp . --no-cache"
+      # Debug: Print environment variables (including secrets)
+      - name: Debug Environment Variables
+        run: |
+          echo "GCP Project ID: ${{ secrets.GCP_PROJECT_ID }}"
 
       # Build Docker Image
       - name: Build Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.PROJECT_ID }}/myapp . --no-cache
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp . --no-cache
 
       # Push Docker Image to GCR
       - name: Push Docker Image to GCR
         run: |
-          docker push gcr.io/${{ secrets.PROJECT_ID }}/myapp
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp
 
       # Deploy to Google Cloud Run
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy demo-service \
-            --image gcr.io/${{ secrets.PROJECT_ID }}/myapp \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
