@@ -3,14 +3,14 @@ name: Build and Deploy to GCP
 on:
   push:
     branches:
-      - main  # Trigger on push to main branch
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repository
+      # Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -21,12 +21,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Build the project with Maven
+      # Build with Maven
       - name: Build with Maven
         run: mvn clean install
 
-      # Set up Google Cloud SDK
-      - name: Set up Google Cloud SDK
+      # Set up Google Cloud CLI
+      - name: Set up Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
@@ -35,28 +35,23 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.SPRINGBOOT }}
-
-      # Debug: Print environment variables (including secrets)
-      - name: Debug Environment Variables
-        run: |
-          echo "GCP Project ID: ${{ secrets.GCP_PROJECT_ID }}"
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       # Build Docker Image
       - name: Build Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp . --no-cache
+          docker build -t us-central1-docker.pkg.dev/gcp-peoject-1/vaddin-demo/myapp .
 
-      # Push Docker Image to GCR
-      - name: Push Docker Image to GCR
+      # Push Docker Image to Artifact Registry
+      - name: Push Docker Image to Artifact Registry
         run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp
+          docker push us-central1-docker.pkg.dev/gcp-peoject-1/vaddin-demo/myapp
 
       # Deploy to Google Cloud Run
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy demo-service \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/myapp \
+            --image us-central1-docker.pkg.dev/gcp-peoject-1/vaddin-demo/myapp \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
