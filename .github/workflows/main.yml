@@ -9,11 +9,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
-    env:
-      GCP_PROJECT_ID: gcp-peoject-1  # Your Google Cloud Project ID
-      GCR_IMAGE: gcr.io/${{ env.GCP_PROJECT_ID }}/your-gcp-image-name  # Docker image path
-      SERVICE_NAME: spring-boot  # Cloud Run service name
-
     steps:
       # Step 1: Checkout the code from GitHub
       - name: Checkout repository
@@ -29,19 +24,18 @@ jobs:
       - name: Set up Google Cloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: ${{ env.GCP_PROJECT_ID }}
+          project_id: gcp-peoject-1  # Your Google Cloud Project ID
 
       # Step 4: Build the Docker image and push to Google Container Registry
       - name: Build and Push Docker Image to GCR
         run: |
-          # Build the Docker image
-          gcloud builds submit --tag $GCR_IMAGE
+          gcloud builds submit --tag gcr.io/gcp-peoject-1/your-gcp-image-name
 
       # Step 5: Deploy the image to Google Cloud Run
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud run deploy $SERVICE_NAME \
-            --image $GCR_IMAGE \
+          gcloud run deploy spring-boot \
+            --image gcr.io/gcp-peoject-1/your-gcp-image-name \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
