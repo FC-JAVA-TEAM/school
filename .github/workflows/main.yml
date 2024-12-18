@@ -34,7 +34,7 @@ jobs:
       # Step 5: Deploy the image to Google Cloud Run
       - name: Deploy to Google Cloud Run
         run: |
-          gcloud run deploy spring-boot \
+          gcloud run deploy demo-service \
             --image gcr.io/gcp-peoject-1/your-gcp-image-name \
             --region us-central1 \
             --platform managed \
