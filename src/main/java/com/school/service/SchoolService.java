@@ -1,31 +1,18 @@
 package com.school.service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.school.client.StudentFignClient;
-import com.school.dto.SchoolResponseData;
-import com.school.dto.Student;
-import com.school.entity.School;
-import com.school.exception.ResourceNotFoundException;
-import com.school.exception.BadRequestException;
-import com.school.exception.GenericException;
-import com.school.repo.SchoolRepo;
-
-import feign.FeignException;
 
 @Service
 public class SchoolService {
 
-    @Autowired
-    private SchoolRepo schoolRepo;
+//    @Autowired
+//    private SchoolRepo schoolRepo;
 
-    @Autowired
-    private StudentFignClient fignClient;
+//    @Autowired
+//    private StudentFignClient fignClient;
 
     // Save school
 	/*
